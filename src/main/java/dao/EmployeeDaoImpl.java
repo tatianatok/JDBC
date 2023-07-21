@@ -22,14 +22,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public void create(Employee employee) {
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO employee (first_name, last_name, gender, age, city_id) VALUES ((?), (?), (?), (?), (?))")) {
+                "INSERT INTO employee (id, first_name, last_name, gender, age, city_id) VALUES ((?), (?), (?), (?), (?), (?))")) {
 
-            statement.setString(1, employee.getFirst_name());
-            statement.setString(2, employee.getLast_name());
-            statement.setString(3, employee.getGender());
-            statement.setInt(4, employee.getAge());
-            statement.setInt(5, employee.getCity_id());
-            statement.executeQuery();
+            statement.setInt(1, employee.getId());
+            statement.setString(2, employee.getFirst_name());
+            statement.setString(3, employee.getLast_name());
+            statement.setString(4, employee.getGender());
+            statement.setInt(5, employee.getAge());
+            statement.setInt(6, employee.getCity_id());
+            statement.executeUpdate();
+            //statement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,7 +60,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 employee.setLast_name(resultSet.getString("last_name"));
                 employee.setGender(resultSet.getString("gender"));
                 employee.setAge(resultSet.getInt("age"));
-                employee.setCity_id(Integer.parseInt(resultSet.getString("city_name")));
+                employee.setCity_id(Integer.parseInt(resultSet.getString("city_id")));
                 }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,13 +73,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
         @Override
         public void update(Employee employee) {
             try(PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE employee SET first_name = (?), last_name = (?), age = (?),  city_id = (?) WHERE id = (?);")) {
+                    "UPDATE employee SET id = (?), first_name = (?), last_name = (?), age = (?),  city_id = (?) WHERE id = (?);")) {
 
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
 
-                    statement.setString(1, employee.getFirst_name());
-                    statement.setString(2, employee.getLast_name());
+                    statement.setInt(1, employee.getId());
+                    statement.setString(2, employee.getFirst_name());
+                    statement.setString(3, employee.getLast_name());
                     statement.setInt(4, employee.getAge());
                     City city = new City(resultSet.getInt("city_id"),
                             resultSet.getString("city_name"));
@@ -96,7 +99,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
                     "DELETE FROM employee WHERE id=(?)")) {
 
                 statement.setInt(1, id);
-                statement.executeQuery();
+                statement.executeUpdate();
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -120,12 +123,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
                     String lastName = resultSet.getString("last_name");
                     String gender = resultSet.getString("gender");
                     int age = resultSet.getInt("age");
-                    City city = new City(resultSet.getInt("city_id"),
-                            resultSet.getString("city_name"));
+                    int city_id = Integer.parseInt(resultSet.getString("city_id"));
 
                     // Создаем объекты на основе полученных данных
                     // и укладываем их в итоговый список
-                    employeeList.add(new Employee(firstName, lastName, gender, age, city.getCity_id()));
+                    employeeList.add(new Employee(id, firstName, lastName, gender, age, city_id));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

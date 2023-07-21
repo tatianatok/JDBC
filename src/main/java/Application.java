@@ -20,7 +20,7 @@ public class Application {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM employee WHERE id = (?)"); {
 
             // Подставляем значение вместо wildcard
-            statement.setInt(1, 2);
+            statement.setInt(1, 5);
 
             // Делаем запрос к базе и результат кладем в ResultSet
             final ResultSet resultSet = statement.executeQuery();
@@ -30,6 +30,7 @@ public class Application {
                  while (resultSet.next()) {
 
                      // С помощью методов getInt и getString получаем данные из resultSet
+                     String id = "ID: " + resultSet.getInt("id");
                      String firstName = "имя: " + resultSet.getString("first_name");
                      String lastName = "фамилия: " + resultSet.getString("last_name");
                      String gender = "пол: " + resultSet.getString("gender");
@@ -37,6 +38,7 @@ public class Application {
                      String city ="город: " + resultSet.getInt("city_id");
 
                      // Выводим данные в консоль
+                     System.out.println(id);
                      System.out.println(firstName);
                      System.out.println(lastName);
                      System.out.println(gender);
@@ -46,17 +48,26 @@ public class Application {
             // Создаем объект класса
             EmployeeDao employeeDao = new EmployeeDaoImpl(connection);
 
-            City city1 = new City(7, "Сочи");
-            City city2 = new City(9, "Владивосток");
-            employeeDao.create(new Employee("Евгений", "Лебедев", "м", 40, city1.getCity_id()));
-            System.out.println(employeeDao.findById(6));
+                 //City city1 = new City(1, "Москва");
+                 //Employee employee1 = new Employee(6,"Евгений", "Лебедев", "м", 40, city1.getCity_id());
 
-            Employee employee1 = new Employee ("Илья", "Алексеев", "м", 21, city2.getCity_id());
-                     employeeDao.create(employee1);
+            //Вызываем метод добавления объекта
+                 //employeeDao.create(employee1);
 
-            List<Employee> employeeList = new ArrayList<>();
-            employeeList.forEach(System.out::println);
+            //Вызываем метод удаления объекта
+                 //employeeDao.deleteById(11);
 
+            // Создаем список наполняя его объектами, которые получаем
+            // путем вызова метода для получения всех элементов таблицы
+                 List<Employee> list = new ArrayList<>(employeeDao.findAll());
+
+                     // Выведем список в консоль
+                     for (Employee employee : list) {
+                         System.out.println(employee);
+                     }
+
+
+            System.out.println(employeeDao.findById(2));
 
             }
         }
