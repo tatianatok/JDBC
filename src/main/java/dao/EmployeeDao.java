@@ -19,5 +19,5 @@ public interface EmployeeDao {
     void update (Employee employee);
 
     //Удаление конкретного объекта Employee из базы по id
-    void deleteById(int id);
+    void deleteById(Employee employee);
 }
