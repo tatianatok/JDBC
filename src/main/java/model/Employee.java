@@ -28,9 +28,11 @@ public class Employee {
        private String gender;
 
        @Column(name = "age")
-       private int age;
+       private Integer age;
 
        @Column(name = "city_id")
-       private int city_id;
+       private Integer city_id;
 
+       public Employee(String евгений, String лебедев, String м, int i, int i1) {
+       }
 }

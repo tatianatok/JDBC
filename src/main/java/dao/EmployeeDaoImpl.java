@@ -12,17 +12,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
     //Метод добавления
     @Override
     public void create(Employee employee) {
-        // В ресурсах блока try создаем объект сессии с помощью нашего конфиг-файла
-        // И открываем сессию
-        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();) {
-            // Создаем транзакцию и начинаем ее
+
+        try ( Session session= HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            // вызываем на объекте сессии метод save
-            // данный метод внутри себя содержит необходимый запрос к базе
-            // для создания новой строки
             session.save(employee);
-            // Выполняем коммит, то есть сохраняем изменения,
-            // которые совершили в рамках транзакции
             transaction.commit();
         }
     }
@@ -39,16 +32,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 
     //Метод обновления данных в базе
-        @Override
-        public void update(Employee employee) {
-            try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()){
-                Transaction transaction = session.beginTransaction();
-                // Для обновления данных нужно передать в конструктор
-                // объект с актуальными данными
-                session.update(employee);
-                transaction.commit();
-            }
+    @Override
+    public void update(Employee employee) {
+        try (Session session= HibernateSessionFactoryUtil.getSessionFactory().openSession()){
+            Transaction transaction = session.beginTransaction();
+            session.update(employee);
+            transaction.commit();
         }
+    }
 
 
     //Метод удаления данных из базы

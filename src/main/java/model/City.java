@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class City {
 
-    private int city_id;
+    private Integer city_id;
 
     private String city_name;
 

@@ -11,40 +11,33 @@ public class Application {
         // Создаем объект класса ДАО
         EmployeeDao employeeDao = new EmployeeDaoImpl();
 
-            Employee employee2 = new Employee(8,
-                                              "Евгений",
+            Employee employee2 = new Employee("Евгений",
                                               "Лебедев",
                                               "м",
                                               40,
                                               5);
 
+        // Создаем объект
+        //employeeDao.create(employee2);
 
-                // Создаем объект
-                employeeDao.create(employee2);
+        // Получаем объект по id
+        System.out.println(employeeDao.findById(13));
 
-                // Получаем объект по id
-                System.out.println(employeeDao.findById(3));
+        // Получаем полный список объектов
+        List<Employee> list = employeeDao.findAll();
 
-                // Получаем полный список объектов
-                List<Employee> list = employeeDao.findAll();
+              for (Employee employee : list) {
+                  System.out.println(employee);
+                  }
 
-                     for (Employee employee : list) {
-                         System.out.println(employee);
-                     }
+        Employee employee3 = employeeDao.findAll().get(0);
+        employee3.setFirst_name("Денис");
 
-                Employee employee3 = new Employee(9,
-                                                  "Денис",
-                                                  "Осинцев",
-                                                  "м",
-                                                  43,
-                                                  2);
+        // Изменяем объект
+        employeeDao.update(employee3);
 
-
-                     // Изменяем объект
-                     employeeDao.update(employee3);
-
-                     // Удаляем объект
-                     employeeDao.deleteById(employee2);
+        // Удаляем объект
+        //employeeDao.deleteById(employee2);
 
     }
 }
