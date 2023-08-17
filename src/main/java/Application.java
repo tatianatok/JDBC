@@ -14,38 +14,20 @@ public class Application {
         EmployeeDao employeeDao = new EmployeeDaoImpl();
         CityDao cityDao = new CityDaoImpl();
 
-            Employee employee3 = new Employee("Иван",
-                                              "Сидоров",
-                                              "муж",
-                                              50);
+        City omsk = new City();
+        omsk.setCity_name("Omsk");
+        System.out.println(omsk);
 
-            //employeeDao.create(employee3);
+        Employee employee3 = new Employee("Иван",
+                "Сидоров",
+                "муж",
+                50);
 
-                List<Employee> employeeList = employeeDao.findAll();
-        employeeList.stream()
-                .forEach(System.out::println);
-
-        City omsk = new City("Omsk");
-        cityDao.save(omsk);
-
-        employeeDao.create(employee3);
         employee3.setCity(omsk);
 
+        System.out.println(employee3);
 
-        List<Employee> list = employeeDao.findAll();
-
-        for (Employee employee : list) {
-            System.out.println(employee);
-        }
     }
-
-
-
-        // Изменяем объект
-        //employeeDao.update(employee3);
-
-        // Удаляем объект
-        //employeeDao.deleteById(employee2);
 
 }
 
