@@ -2,23 +2,25 @@ package model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
+@EqualsAndHashCode(of = {"id"})
+@Entity
 @Table(name = "employee")
 public class Employee {
 
        @Id
        @GeneratedValue(strategy = GenerationType.IDENTITY)
        @Column(name = "id")
-       private int id;
+       private Integer id;
 
-       @Column(name="first_name")
+       @Column(name = "first_name")
        private String first_name;
 
        @Column(name = "last_name")
@@ -28,11 +30,17 @@ public class Employee {
        private String gender;
 
        @Column(name = "age")
-       private Integer age;
+       private int age;
 
-       @Column(name = "city_id")
-       private Integer city_id;
+       @ManyToOne
+       private City city;
 
-       public Employee(String евгений, String лебедев, String м, int i, int i1) {
+       public Employee(String first_name, String last_name, String gender, int age) {
+              this.first_name = first_name;
+              this.last_name = last_name;
+              this.gender = gender;
+              this.age = age;
+
        }
+
 }

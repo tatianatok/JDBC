@@ -23,11 +23,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
     //Метод получения объекта по id
     @Override
     public Employee findById(int id) {
-        // С помощью конфиг-файла получаем сессию, открываем ее
-        // и через метод get получаем объект
-        // В параметре метода get нужно указать объект какого класса нам нужен
-        // и его id
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Employee.class, id);
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            return session.get(Employee.class, id);
+        }
     }
 
 
@@ -47,7 +45,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
         public void deleteById(Employee employee) {
             try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
                 Transaction transaction = session.beginTransaction();
-                // Для удаления объекта из таблицы нужно передать его в метод delete
                 session.delete(employee);
                 transaction.commit();
             }
