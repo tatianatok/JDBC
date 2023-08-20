@@ -17,6 +17,7 @@ public class Application {
         City omsk = new City();
         omsk.setCity_name("Omsk");
         System.out.println(omsk);
+        cityDao.save(omsk);
 
         Employee employee3 = new Employee("Иван",
                 "Сидоров",
@@ -24,10 +25,8 @@ public class Application {
                 50);
 
         employee3.setCity(omsk);
-
+        employeeDao.create(employee3);
         System.out.println(employee3);
-
     }
-
 }
 
